@@ -1,0 +1,45 @@
+# Root .gitignore for Bookstore Monorepo
+
+# Environment variables & secrets
+backend/.env
+.env
+.env.local
+.env.*.local
+!.env.example
+!backend/.env.example
+
+# Java & Maven
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.log
+.mvn/wrapper/maven-wrapper.jar
+
+# Frontend & Node
+node_modules/
+dist/
+build/
+.npm/
+.yarn/
+*.tsbuildinfo
+
+# IDE & Editor files
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+*.sublime-project
+*.sublime-workspace
+.project
+.classpath
+.settings/
+.factorypath
+bin/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+desktop.ini
