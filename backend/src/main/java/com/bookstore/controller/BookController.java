@@ -2,6 +2,8 @@ package com.bookstore.controller;
 
 import com.bookstore.dto.ApiResponse;
 import com.bookstore.dto.BookDto;
+import com.bookstore.dto.CreateBookRequest;
+import com.bookstore.dto.UpdateBookRequest;
 import com.bookstore.service.BookService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +26,7 @@ public class BookController {
 
     @GetMapping
     public ResponseEntity<ApiResponse<Page<BookDto>>> getBooks(
+            @RequestParam(required = false) String search,
             @RequestParam(required = false) String query,
             @RequestParam(required = false) Long categoryId,
             @RequestParam(defaultValue = "0") int page,
@@ -31,9 +34,10 @@ public class BookController {
             @RequestParam(defaultValue = "id") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDir
     ) {
+        String searchTerm = search != null ? search : query;
         Sort sort = sortDir.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
         Pageable pageable = PageRequest.of(page, size, sort);
-        Page<BookDto> books = bookService.getBooks(query, categoryId, pageable);
+        Page<BookDto> books = bookService.getBooks(searchTerm, categoryId, pageable);
         return ResponseEntity.ok(ApiResponse.success(books));
     }
 
@@ -56,15 +60,18 @@ public class BookController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponse<BookDto>> createBook(@Valid @RequestBody BookDto bookDto) {
-        BookDto created = bookService.createBook(bookDto);
+    public ResponseEntity<ApiResponse<BookDto>> createBook(@Valid @RequestBody CreateBookRequest request) {
+        BookDto created = bookService.createBook(request);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(ApiResponse.success("Book created successfully", created));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<BookDto>> updateBook(@PathVariable Long id, @RequestBody BookDto bookDto) {
-        BookDto updated = bookService.updateBook(id, bookDto);
+    public ResponseEntity<ApiResponse<BookDto>> updateBook(
+            @PathVariable Long id,
+            @Valid @RequestBody UpdateBookRequest request
+    ) {
+        BookDto updated = bookService.updateBook(id, request);
         return ResponseEntity.ok(ApiResponse.success("Book updated successfully", updated));
     }
 

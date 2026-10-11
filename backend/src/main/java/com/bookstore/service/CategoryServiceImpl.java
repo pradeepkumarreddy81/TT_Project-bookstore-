@@ -1,6 +1,7 @@
 package com.bookstore.service;
 
 import com.bookstore.dto.CategoryDto;
+import com.bookstore.dto.CategoryRequest;
 import com.bookstore.entity.Category;
 import com.bookstore.exception.BadRequestException;
 import com.bookstore.exception.ResourceNotFoundException;
@@ -34,14 +35,15 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Transactional
-    public CategoryDto createCategory(CategoryDto categoryDto) {
-        if (categoryRepository.existsByName(categoryDto.getName())) {
-            throw new BadRequestException("Category already exists with name: " + categoryDto.getName());
+    public CategoryDto createCategory(CategoryRequest request) {
+        String name = request.getName().trim();
+        if (categoryRepository.existsByName(name)) {
+            throw new BadRequestException("Category already exists with name: " + name);
         }
 
         Category category = Category.builder()
-                .name(categoryDto.getName())
-                .description(categoryDto.getDescription())
+                .name(name)
+                .description(request.getDescription())
                 .build();
 
         return mapToDto(categoryRepository.save(category));
@@ -49,12 +51,21 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Transactional
-    public CategoryDto updateCategory(Long id, CategoryDto categoryDto) {
+    public CategoryDto updateCategory(Long id, CategoryRequest request) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Category not found with id: " + id));
 
-        if (categoryDto.getName() != null) category.setName(categoryDto.getName());
-        if (categoryDto.getDescription() != null) category.setDescription(categoryDto.getDescription());
+        if (request.getName() != null) {
+            String name = request.getName().trim();
+            if (!name.equalsIgnoreCase(category.getName()) && categoryRepository.existsByName(name)) {
+                throw new BadRequestException("Category already exists with name: " + name);
+            }
+            category.setName(name);
+        }
+
+        if (request.getDescription() != null) {
+            category.setDescription(request.getDescription());
+        }
 
         return mapToDto(categoryRepository.save(category));
     }

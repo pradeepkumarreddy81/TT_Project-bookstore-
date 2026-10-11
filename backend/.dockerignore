@@ -1,0 +1,26 @@
+# Secrets and environment files
+.env
+.env.*
+!.env.example
+
+# Maven and build outputs
+target/
+*.jar
+*.war
+
+# IDE and Editor files
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+
+# Git
+.git
+.gitignore
+
+# Logs and OS files
+*.log
+.DS_Store
+Thumbs.db

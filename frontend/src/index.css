@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 41 43% 96%; /* #FAF6EF */
+  --foreground: 40 8% 10%;  /* #1B1A17 */
+
+  --card: 45 40% 98%;
+  --card-foreground: 40 8% 10%;
+
+  --popover: 45 40% 98%;
+  --popover-foreground: 40 8% 10%;
+
+  --primary: 12 62% 44%; /* #B5472B Terracotta */
+  --primary-foreground: 45 100% 98%;
+
+  --secondary: 162 31% 21%; /* #24443A Forest green */
+  --secondary-foreground: 45 100% 98%;
+
+  --muted: 38 25% 91%;
+  --muted-foreground: 40 8% 40%;
+
+  --accent: 12 62% 44%;
+  --accent-foreground: 45 100% 98%;
+
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
+
+  --border: 38 20% 86%; /* Warm paper border #E8DFC8 */
+  --input: 38 20% 86%;
+  --ring: 12 62% 44%;
+
+  --radius: 0.25rem;
+}
+
+body {
+  background-color: #FAF6EF;
+  color: #1B1A17;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, .font-serif {
+  font-family: 'Fraunces', serif;
+}
+
+/* Custom scrollbar matching paper aesthetic */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #FAF6EF;
+}
+::-webkit-scrollbar-thumb {
+  background: #D3CBB9;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #B5472B;
+}
