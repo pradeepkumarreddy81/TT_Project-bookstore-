@@ -43,12 +43,21 @@ An editorial, bookish online bookstore built with **React 18**, **Vite**, **Tail
 
 ---
 
-## ⚙️ Environment Variables Note
+## ⚙️ Environment Variables
 
-> [!IMPORTANT]
-> **The frontend requires no `.env` files.**
-> - **In Local Development**: The Vite dev server proxies all `/api` requests to `http://localhost:8080` (configured in `vite.config.js`).
-> - **In Production (Render)**: The Render Static Site rewrite rule routes `/api/*` directly to the Spring Boot web service.
+Set `VITE_API_BASE_URL` to the backend API base URL, including `/api`:
+
+```properties
+VITE_API_BASE_URL=http://localhost:8080/api
+```
+
+The local `frontend/.env` uses this URL for development. Copy `.env.example` if needed, then replace the value with your deployed backend URL when building for production. Vite embeds this value into the frontend at build time, so set `VITE_API_BASE_URL` in the Render Static Site's environment variables before deployment. For example:
+
+```properties
+VITE_API_BASE_URL=https://your-backend.onrender.com/api
+```
+
+The `.env` file is ignored by Git. When the frontend calls a hosted backend directly, configure the backend's `CORS_ALLOWED_ORIGINS` to include your Render frontend URL; setting the frontend URL alone does not bypass CORS.
 
 ---
 
@@ -67,7 +76,7 @@ npm install
 ```
 
 ### 3. Start Development Server
-Ensure the backend API is running on `http://localhost:8080`, then start the Vite dev server:
+Ensure the backend API is running on `http://localhost:8080` and `VITE_API_BASE_URL` is set in `.env`, then start the Vite dev server:
 
 ```bash
 npm run dev

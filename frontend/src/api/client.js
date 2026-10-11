@@ -16,7 +16,7 @@ function notifyWakeStatus(isWaking, attempt = 0) {
 }
 
 const client = axios.create({
-  baseURL: '/api',
+  baseURL: import.meta.env.VITE_API_BASE_URL || '/api',
   timeout: 60000, // 60s timeout for Render free tier cold-start resilience
   headers: {
     'Content-Type': 'application/json',
