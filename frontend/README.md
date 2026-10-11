@@ -45,19 +45,19 @@ An editorial, bookish online bookstore built with **React 18**, **Vite**, **Tail
 
 ## ⚙️ Environment Variables
 
-Set `VITE_API_BASE_URL` to the backend API base URL, including `/api`:
+Set `VITE_API_BASE_URL` to the backend origin, with or without the `/api` suffix:
 
 ```properties
-VITE_API_BASE_URL=http://localhost:8080/api
+VITE_API_BASE_URL=http://localhost:8080
 ```
 
-The local `frontend/.env` uses this URL for development. Copy `.env.example` if needed, then replace the value with your deployed backend URL when building for production. Vite embeds this value into the frontend at build time, so set `VITE_API_BASE_URL` in the Render Static Site's environment variables before deployment. For example:
+The frontend adds `/api` automatically, so both `http://localhost:8080` and `http://localhost:8080/api` work. The local `frontend/.env` uses the local backend for development. Vite embeds this value into the frontend at build time, so set `VITE_API_BASE_URL` in the Render Static Site's environment variables before deployment. For this deployment:
 
 ```properties
-VITE_API_BASE_URL=https://your-backend.onrender.com/api
+VITE_API_BASE_URL=https://bookstore-2-yb2s.onrender.com
 ```
 
-The `.env` file is ignored by Git. When the frontend calls a hosted backend directly, configure the backend's `CORS_ALLOWED_ORIGINS` to include your Render frontend URL; setting the frontend URL alone does not bypass CORS.
+The `.env` file is ignored by Git. Configure the backend's `CORS_ALLOWED_ORIGINS` to include the exact Render frontend origin (`https://bookstore-1-omoo.onrender.com`); setting the frontend URL alone does not bypass CORS.
 
 ---
 

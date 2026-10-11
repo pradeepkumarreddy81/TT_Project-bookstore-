@@ -15,8 +15,13 @@ function notifyWakeStatus(isWaking, attempt = 0) {
   );
 }
 
+const configuredApiBaseUrl = import.meta.env.VITE_API_BASE_URL?.trim().replace(/\/+$/, '');
+const apiBaseUrl = configuredApiBaseUrl
+  ? `${configuredApiBaseUrl.replace(/\/api$/i, '')}/api`
+  : '/api';
+
 const client = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || '/api',
+  baseURL: apiBaseUrl,
   timeout: 60000, // 60s timeout for Render free tier cold-start resilience
   headers: {
     'Content-Type': 'application/json',
